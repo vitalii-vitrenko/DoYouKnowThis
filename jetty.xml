@@ -4,9 +4,9 @@
         <Arg>jdbc/dataSource</Arg>
         <Arg>
             <New class="org.postgresql.ds.PGSimpleDataSource">
-                <Set name="DatabaseName">doyouknowthis</Set>
-                <Set name="User">root</Set>
-                <Set name="Password">doyouknowthis_root</Set>
+                <Set name="DatabaseName">vagrant</Set>
+                <Set name="User">vagrant</Set>
+                <Set name="Password">vagrant</Set>
                 <Set name="ServerName">localhost</Set>
                 <Set name="PortNumber">5432</Set>
             </New>

@@ -12,3 +12,5 @@ buildNumber.properties
 #idea
 .idea
 *.iml
+
+.vagrant
