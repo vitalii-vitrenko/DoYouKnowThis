@@ -14,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class DomainEntity implements Serializable {
+public abstract class DomainEntity {
 
     @Id
     @GeneratedValue

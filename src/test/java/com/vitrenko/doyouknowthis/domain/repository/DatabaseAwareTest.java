@@ -1,5 +1,6 @@
 package com.vitrenko.doyouknowthis.domain.repository;
 
+import com.vitrenko.doyouknowthis.config.RootConfig;
 import com.vitrenko.doyouknowthis.config.TestRepositoryConfig;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,7 +12,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import javax.transaction.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestRepositoryConfig.class})
+@ContextConfiguration(classes = {RootConfig.class, TestRepositoryConfig.class})
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class})

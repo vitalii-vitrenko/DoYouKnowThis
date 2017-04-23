@@ -8,9 +8,10 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.CascadeType.ALL;
 
 @Data
 @NoArgsConstructor
@@ -18,24 +19,25 @@ import static javax.persistence.CascadeType.REMOVE;
 @EqualsAndHashCode(exclude = {"comments"}, callSuper = false)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Post extends DomainEntity{
+public abstract class Post extends DomainEntity {
 
-    public Post(Long id, String body, User user, List<Comment> comments) {
+    private static final int POST_BODY_MAX_SIZE = 5000;
+
+    public Post(Long id, String body, UserActivity userActivity) {
         super(id);
         this.body = body;
-        this.comments = comments;
-        this.user = user;
+        this.userActivity = userActivity;
     }
 
     @NotNull
-    @Size(max = 1000)
+    @Size(max = POST_BODY_MAX_SIZE)
+    @Column(nullable = false, length = POST_BODY_MAX_SIZE)
     private String body;
 
+    @Embedded
+    private UserActivity userActivity;
 
-    @ManyToOne(optional = false)
-    private User user;
-
-    @OneToMany(mappedBy = "post", cascade = REMOVE, orphanRemoval = true)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
 }

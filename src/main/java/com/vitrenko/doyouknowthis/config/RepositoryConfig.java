@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -24,7 +25,8 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackageClasses = QuestionRepository.class)
 public class RepositoryConfig {
 
-    public static final String JNDI_NAME = "jdbc/dataSource";
+    private static final String JNDI_NAME = "jdbc/dataSource";
+    private static final String ENTITY_PACKAGE_TO_SCAN = "com.vitrenko.doyouknowthis.domain.entity";
 
     @Bean
     public JndiObjectFactoryBean jndiObjectFactoryBean() {
@@ -50,11 +52,13 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            @SuppressWarnings("SpringJavaAutowiringInspection") DataSource dataSource,
+            JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
-        entityManagerFactory.setPackagesToScan("com.vitrenko.doyouknowthis.domain.entity");
+        entityManagerFactory.setPackagesToScan(ENTITY_PACKAGE_TO_SCAN);
         entityManagerFactory.setJpaProperties(hibirnateProperties());
         return entityManagerFactory;
     }

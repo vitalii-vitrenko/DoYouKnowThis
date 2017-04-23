@@ -1,15 +1,12 @@
 package com.vitrenko.doyouknowthis.domain.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.REMOVE;
@@ -21,17 +18,28 @@ import static javax.persistence.CascadeType.REMOVE;
 @ToString(callSuper = true)
 public class Question extends Post {
 
-    public Question(Long id, String header, String body, User user, List<Comment> comments, List<Answer> answers) {
-        super(id, body, user, comments);
+    public static final int HEADER_MAX_LENGTH = 50;
+
+    public Question(Long id, String body, String header, int price, UserActivity userActivity) {
+        super(id, body, userActivity);
         this.header = header;
-        this.answers = answers;
+        this.price = price;
     }
 
     @NotNull
-    @Size(max = 50)
+    @Size(max = HEADER_MAX_LENGTH)
+    @Column(length = HEADER_MAX_LENGTH)
     private String header;
 
+    @Min(1)
+    @Column(nullable = false)
+    private int price;
+
+    @OneToOne
+    @JoinColumn
+    private Answer selectedAnswer;
+
     @OneToMany(mappedBy = "question", cascade = REMOVE, orphanRemoval = true)
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
 
 }

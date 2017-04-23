@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@ComponentScan("com.vitrenko.spittr.web")
+@ComponentScan("com.vitrenko.doyouknowthis.rest")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override

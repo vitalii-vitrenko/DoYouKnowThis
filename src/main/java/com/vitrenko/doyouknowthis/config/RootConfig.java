@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@ComponentScan(basePackages = "com.vitrenko.spittr.model")
+@ComponentScan(basePackages = "com.vitrenko.doyouknowthis.domain")
 @Import({RepositoryConfig.class})
 public class RootConfig {
 }

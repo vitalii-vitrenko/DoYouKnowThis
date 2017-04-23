@@ -2,49 +2,77 @@ package com.vitrenko.doyouknowthis.domain.repository;
 
 import com.vitrenko.doyouknowthis.domain.entity.Question;
 import com.vitrenko.doyouknowthis.domain.entity.User;
+import com.vitrenko.doyouknowthis.domain.entity.UserActivity;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.context.transaction.TestTransaction;
 
 import javax.inject.Inject;
-import java.util.Collections;
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
+@Transactional
 public class QuestionRepositoryTest extends DatabaseAwareTest {
 
-    private final User user = mock(User.class);
-
-    private final Question question = new Question(
-            1L,
-            "Question",
-            "Question body",
-            user,
-            Collections.emptyList(),
-            Collections.emptyList()
-    );
+    private final User user = new User(
+            null,
+            "login",
+            "password",
+            "email@mail.com",
+            50);
 
     @Inject
-    private QuestionRepository repository;
+    private QuestionRepository questionRepository;
 
-    private Question savedQuestion;
+    @Inject
+    private UserRepository userRepository;
+
+
 
     @Before
+
     public void setUp() {
-        savedQuestion = repository.saveAndFlush(question);
+
     }
+
 
     @Test
     public void shouldReturnSavedEntity() {
-        assertNotNull("Saved entity must be not null", savedQuestion);
-        assertNotNull("Id of saved entity must be not null", savedQuestion.getId());
+        User savedUser = userRepository.saveAndFlush(user);
+        long id = savedUser.getId();
+        endTransaction();
+
+        User gotUser = userRepository.getOne(savedUser.getId());
+        Question question = question(gotUser);
+        questionRepository.saveAndFlush(question);
+        endTransaction();
+
+        question = question(gotUser);
+        questionRepository.saveAndFlush(question);
+        endTransaction();
+
+        question = question(gotUser);
+        questionRepository.saveAndFlush(question);
+        endTransaction();
+
+        System.out.println("before find user");
+        gotUser = userRepository.findOne(id);
+        System.out.println(gotUser.getPosts());
     }
 
-    @Test
-    public void shouldFindEntity() {
-        Question foundQuestion = repository.findOne(savedQuestion.getId());
-        assertTrue("Found entity should be equals to saved", question.equals(foundQuestion));
+    public void endTransaction() {
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+        TestTransaction.start();
+    }
+
+
+    public Question question(User user) {
+        return new Question(null, "Question body", "Question header", 30, userActivity(user));
+    }
+
+    public UserActivity userActivity(User user) {
+        return new UserActivity(user, LocalDateTime.now(), null);
     }
 
 }

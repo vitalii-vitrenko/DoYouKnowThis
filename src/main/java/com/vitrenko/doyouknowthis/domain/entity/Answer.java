@@ -1,15 +1,13 @@
 package com.vitrenko.doyouknowthis.domain.entity;
 
-import lombok.*;
-import org.hibernate.validator.constraints.CreditCardNumber;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,16 +16,18 @@ import java.util.List;
 @Entity
 public class Answer extends Post {
 
-    public Answer(Long id, String body, User user, List<Comment> comments, Question question, int likeCount) {
-        super(id, body, user, comments);
+    public Answer(Long id, String body, UserActivity userActivity, Question question, int likesCount) {
+        super(id, body, userActivity);
         this.question = question;
-        this.likeCount = likeCount;
+        this.likesCount = likesCount;
     }
 
-    @ManyToOne(optional = false)
     @NotNull
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false, updatable = false)
     private Question question;
 
     @Min(0)
-    private int likeCount;
+    private int likesCount;
+
 }
