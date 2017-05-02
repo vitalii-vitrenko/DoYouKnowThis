@@ -1,5 +1,7 @@
-package com.vitrenko.doyouknowthis.domain.repository;
+package com.vitrenko.doyouknowthis.testcommons;
 
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.vitrenko.doyouknowthis.config.RootConfig;
 import com.vitrenko.doyouknowthis.config.TestRepositoryConfig;
 import org.junit.runner.RunWith;
@@ -15,7 +17,7 @@ import javax.transaction.Transactional;
 @ContextConfiguration(classes = {RootConfig.class, TestRepositoryConfig.class})
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class})
+        TransactionDbUnitTestExecutionListener.class})
 @Transactional
 public abstract class DatabaseAwareTest {
 }

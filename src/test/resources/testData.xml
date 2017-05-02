@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <Client id="-1" login="dbUnitLogin1" password="password" email="email1@email.com" coins="50"/>
+    <Client id="-2" login="dbUnitLogin2" password="password" email="email2@email.com" coins="50"/>
+    <Question id="-3" body="dbUnit question body1" header="dbUnit question header1" createdData="2017-05-29 18:55:14" price="30" user_id="-1" />
+    <Question id="-4" body="dbUnit question body2" header="dbUnit question header2" createdData="2017-05-29 18:56:14" price="20" user_id="-2" />
+    <Answer id="-5" body="dbUnit answer body1" createdData="2017-05-29 19:56:14" likesCount="0" question_id="-3" user_id="-2" />
+    <Answer id="-6" body="dbUnit answer body1" createdData="2017-05-29 19:57:14" likesCount="2" question_id="-4" user_id="-1" />
+</dataset>

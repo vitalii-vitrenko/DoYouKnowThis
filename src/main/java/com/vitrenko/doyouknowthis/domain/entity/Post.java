@@ -18,7 +18,7 @@ import static javax.persistence.CascadeType.ALL;
 @ToString(callSuper = true)
 @EqualsAndHashCode(exclude = {"comments"}, callSuper = false)
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Post extends DomainEntity {
 
     private static final int POST_BODY_MAX_SIZE = 5000;

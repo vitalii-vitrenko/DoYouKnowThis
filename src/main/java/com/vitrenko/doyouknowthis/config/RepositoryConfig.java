@@ -1,6 +1,7 @@
 package com.vitrenko.doyouknowthis.config;
 
 import com.vitrenko.doyouknowthis.domain.repository.QuestionRepository;
+import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;

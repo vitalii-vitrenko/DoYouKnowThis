@@ -22,7 +22,7 @@ public class UserActivity {
     }
 
     @NotNull
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, updatable = false)
     private User user;
 
